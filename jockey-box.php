@@ -74,7 +74,6 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 			       'popular_items' => 'Popular years',
 			       'all_items'     => 'All years',
 			),
-			'meta_box_cb'    => array( $this, 'meta_box_years_taxonomy' ),
 			'description'    => 'Track years of attendance',
 			'query_var'      => 'years',
 			'singular_label' => 'Year',
@@ -87,35 +86,6 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 			array_push( $post_types, $post_type );
 		}
 		register_taxonomy( 'years', $post_types, $year_tax_args );
-	}
-
-	function meta_box_years_taxonomy( $post ) {
-		/**
-		 * Creates HTML output for a meta box that turns a taxonomy into
-		 * a select drop-down list instead of the typical checkboxes
-		 */
-		$taxonomy_name = 'years';
-
-		//get all the term names and slugs for $taxonomy_name
-		$terms = get_terms( $taxonomy_name,  array( 'hide_empty' => false ) );
-
-		$HTML = '';
-		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-
-			//get the saved terms for this taxonomy
-			$saved_terms = wp_get_object_terms( $post->ID, $taxonomy_name );
-			$saved_term_slugs = array_map( create_function( '$o', 'return $o->slug;' ), $saved_terms );
-
-			$HTML .= '<ul id="categorychecklist" class="categorychecklist form-no-clear">';
-			foreach( $terms as $term ) {
-				$HTML .= '<li><label class="selectit">'
-					. '<input type="checkbox" name="tax_input[years][]" id="in-years-' . $term->slug . '" value="' . $term->slug . '"'
-					. checked( true, in_array( $term->slug, $saved_term_slugs ), false )
-					. ' /> ' . $term->name . '</label></li>';
-			}
-			$HTML .= '</ul>';
-		}
-		echo $HTML;
 	}
 
 	function populate_custom_taxonomies_with_terms() {
