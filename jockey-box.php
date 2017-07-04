@@ -46,12 +46,16 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 		add_action( 'init', array( &$this, 'add_custom_taxonomies' ) );
 		add_action( 'init', array( &$this, 'populate_custom_taxonomies_with_terms' ) );
 
-		//include our shortcodes class and add the shortcodes
 		$this->include_dependencies();
+
 		if( class_exists( 'Jockey_Box_Shortcodes' ) ) {
+			//Make some shortcodes available
 			$shortcodes = new Jockey_Box_Shortcodes();
 			$shortcodes->hooks();
+		}
 
+		if( class_exists( 'Jockey_Box_Advanced_Custom_Fields' ) ) {
+			//Implement the Advanced Custom Fields plugin on our post types
 			$acf_config = new Jockey_Box_Advanced_Custom_Fields();
 			$acf_config->hooks();
 		}
