@@ -3,9 +3,9 @@ Contributors: salzano
 Tags: beer, beer fest, craft beer, festival, brewery
 Requires at least: 3.0.1
 Tested up to: 4.8
-Stable tag: 2.0.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 2.1.0
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Instant craft beer festival support for breweries, sponsors, and food vendors
 
@@ -24,8 +24,6 @@ This shortcode creates a grid of featured images attached to your attendees:
 
 == TODO ==
 
- * Refactor your custom post type args arrays during their creation
- * Create a repo for this, get it on github
  * Formalize the dependency on Advanced Custom Fields & write a spin-up component for those fields
  * Add menu links to the admin bar
 

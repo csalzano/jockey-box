@@ -3,11 +3,11 @@
  * Plugin Name: Jockey Box
  * Plugin URI: http://lititzcraftbeerfest.com
  * Description: Instant craft beer festival support for breweries, sponsors, and food vendors
- * Version: 2.0.0
+ * Version: 2.1.0
  * Author: Corey Salzano
  * Author URI: https://coreysalzano.com
- * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 class Lititz_Craft_Beer_Fest_Jockey_Box{
@@ -106,54 +106,22 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 	}
 
 	function create_post_types() {
-
-		//create a CPT for brewery tents
-		register_post_type( 'brewery',
-			array(
-				'labels' => array(
-					'name'          => __( 'Breweries' ),
-					'singular_name' => __( 'Brewery' )
-				),
-				'menu_icon' => 'dashicons-store',
-				'public' => true,
-				'has_archive' => true,
-				'taxonomies' => array( 'category', 'years' ),
-				'exclude_from_search' => true,
-				'supports' => array( 'title', 'editor', 'thumbnail' )
-			)
-		);
-
-		//create a CPT for sponsors
-		register_post_type( 'sponsor',
-			array(
-				'labels' => array(
-					'name' => __( 'Sponsors' ),
-					'singular_name' => __( 'Sponsor' )
-				),
-				'menu_icon' => 'dashicons-flag',
-				'public' => true,
-				'has_archive' => false,
-				'taxonomies' => array('category'),
-				'exclude_from_search' => true,
-				'supports' => array('title', 'editor', 'thumbnail')
-			)
-		);
-
-		//create a CPT for food vendors
-		register_post_type( 'food-vendor',
-			array(
-				'labels' => array(
-					'name' => __( 'Food vendors' ),
-					'singular_name' => __( 'Food vendor' )
-				),
-				'menu_icon' => 'dashicons-carrot',
-				'public' => true,
-				'has_archive' => false,
-				'taxonomies' => array('category'),
-				'exclude_from_search' => true,
-				'supports' => array('title', 'editor', 'thumbnail')
-			)
-		);
+		foreach( Lititz_Craft_Beer_Fest_Jockey_Box::$CUSTOM_POST_TYPES as $post_type => $attributes ) {
+			register_post_type( $post_type,
+				array(
+					'labels' => array(
+						'name'          => __( $attributes['plural'] ),
+						'singular_name' => __( $attributes['singular'] ),
+					),
+					'menu_icon' => $attributes['icon'],
+					'public' => true,
+					'has_archive' => true,
+					'taxonomies' => array( 'category', 'years' ),
+					'exclude_from_search' => true,
+					'supports' => array( 'title', 'editor', 'thumbnail' )
+				)
+			);
+		}
 	}
 }
 $salzano_486293853745 = new Lititz_Craft_Beer_Fest_Jockey_Box();
