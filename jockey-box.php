@@ -17,19 +17,19 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 		'brewery' => array(
 			'singular' => 'Brewery',
 			'plural'   => 'Breweries',
-			'icon'     => 'dashicon-store',
+			'icon'     => 'dashicons-store',
 			),
 
 		'sponsor' => array(
 			'singular' => 'Sponsor',
 			'plural'   => 'Sponsors',
-			'icon'     => 'dashicon-flag',
+			'icon'     => 'dashicons-flag',
 			),
 
 		'food-vendor' => array(
 			'singular' => 'Food vendor',
 			'plural'   => 'Food vendors',
-			'icon'     => 'dashicon-carrot',
+			'icon'     => 'dashicons-carrot',
 			),
 	);
 

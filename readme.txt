@@ -33,6 +33,7 @@ This shortcode creates a grid of featured images attached to your attendees:
 = 2.1.0 =
 * The Advanced Custom Fields configuration is now built into this plugin
 * This code is now GPLv3
+* Bug fix: a missing 's' was preventing the CPT dashicons to show up since 2.0.0
 
 = 2.0.0 =
 * Introduces a custom taxonomy for years attended, allowing both management of who is coming this year, and an archive that preserves the history
