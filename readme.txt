@@ -11,7 +11,7 @@ Instant craft beer festival support for breweries, sponsors, and food vendors
 
 == Description ==
 
-This plugin makes running a craft beer festival website easy with WordPress. Maintain lists of breweries, sponsors, and food vendors in the WordPress dashboard. Each of these entitites can be categorized by year, so displaying a list or photo grid of this year's breweries is as easy as listing any other year.
+This plugin makes running a craft beer festival website easy with WordPress. Maintain lists of breweries, sponsors, and food vendors in the WordPress dashboard. Each of these entities can be categorized by year, so displaying a list or photo grid of this year's breweries is as easy as listing any other year.
 
 This shortcode creates a grid of featured images attached to your attendees:
 
