@@ -24,11 +24,15 @@ This shortcode creates a grid of featured images attached to your attendees:
 
 == TODO ==
 
- * Formalize the dependency on Advanced Custom Fields & write a spin-up component for those fields
+ * Formalize the dependency on Advanced Custom Fields
  * Add menu links to the admin bar
 
 
 == Changelog ==
+
+= 2.1.0 =
+* The Advanced Custom Fields configuration is now built into this plugin
+* This code is now GPLv3
 
 = 2.0.0 =
 * Introduces a custom taxonomy for years attended, allowing both management of who is coming this year, and an archive that preserves the history

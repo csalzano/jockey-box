@@ -51,12 +51,21 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 		if( class_exists( 'Jockey_Box_Shortcodes' ) ) {
 			$shortcodes = new Jockey_Box_Shortcodes();
 			$shortcodes->hooks();
+
+			$acf_config = new Jockey_Box_Advanced_Custom_Fields();
+			$acf_config->hooks();
 		}
 	}
 
 	function include_dependencies() {
-		$path = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes.php';
-		if( file_exists( $path ) ) { require $path; }
+		$paths = array(
+			'class-shortcodes.php',
+			'class-advanced-custom-fields.php',
+		);
+		foreach( $paths as $path ) {
+			$path = plugin_dir_path( __FILE__ ) . 'includes/' . $path;
+			if( file_exists( $path ) ) { require $path; }
+		}
 	}
 
 	function add_custom_taxonomies() {
