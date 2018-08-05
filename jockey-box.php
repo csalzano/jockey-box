@@ -3,7 +3,7 @@
  * Plugin Name: Jockey Box
  * Plugin URI: http://lititzcraftbeerfest.com
  * Description: Instant craft beer festival support for breweries, sponsors, and food vendors
- * Version: 2.1.0
+ * Version: 3.0.0
  * Author: Corey Salzano
  * Author URI: https://coreysalzano.com
  * License: GPLv3
@@ -18,33 +18,34 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 			'singular' => 'Brewery',
 			'plural'   => 'Breweries',
 			'icon'     => 'dashicons-store',
-			),
+		),
 
 		'sponsor' => array(
 			'singular' => 'Sponsor',
 			'plural'   => 'Sponsors',
 			'icon'     => 'dashicons-flag',
-			),
+		),
 
 		'food-vendor' => array(
 			'singular' => 'Food vendor',
 			'plural'   => 'Food vendors',
 			'icon'     => 'dashicons-carrot',
-			),
+		),
 	);
 
 	function hooks() {
 		/**
 		 * Create custom post types for breweries, sponsors & food vendors
 		 */
-		add_action( 'init', array( &$this, 'create_post_types' ) );
+		add_action( 'init', array( $this, 'create_post_types' ) );
 
 		/**
 		 * Add a taxonomy to catalog breweries, sponsors & food vendors by
 		 * year of attendance.
 		 */
-		add_action( 'init', array( &$this, 'add_custom_taxonomies' ) );
-		add_action( 'init', array( &$this, 'populate_custom_taxonomies_with_terms' ) );
+		add_action( 'init', array( $this, 'add_custom_taxonomies' ) );
+		//This should be an activation hook.
+		add_action( 'init', array( $this, 'populate_custom_taxonomies_with_terms' ), 11 );
 
 		$this->include_dependencies();
 
@@ -73,12 +74,13 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 	}
 
 	function add_custom_taxonomies() {
+
 		/**
 		 * A taxonomy for year of attendance let's us list who is coming this
 		 * year and who came three years ago.
 		 */
 		$year_tax_args = array (
-			'hierarchical'   => true,
+			'hierarchical'   => true, //true to display as checkboxes in quick edit
 			'label'          => 'Years',
 			'labels'         => array (
 			       'name'          => 'Years',
@@ -99,6 +101,29 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 			array_push( $post_types, $post_type );
 		}
 		register_taxonomy( 'years', $post_types, $year_tax_args );
+
+		/**
+		 * A taxonomy for level of sponsorship enables a tiered sponsor layout.
+		 * A five star system corresponds loosely to the amount of money the
+		 * sponsor has given the festival.
+		 */
+		$levels_tax_args = array (
+			'hierarchical'   => true, //true to display as checkboxes in quick edit
+			'label'          => 'Levels',
+			'labels'         => array (
+			       'name'          => 'Levels',
+			       'singular_name' => 'Level',
+			       'search_items'  => 'Search levels',
+			       'popular_items' => 'Popular levels',
+			       'all_items'     => 'All levels',
+			),
+			'description'    => 'Order sponsors by amount donated',
+			'query_var'      => 'levels',
+			'singular_label' => 'Level',
+			'show_in_menu'   => true,
+			'show_ui'        => true,
+		);
+		register_taxonomy( 'levels', 'sponsor', $levels_tax_args );
 	}
 
 	function populate_custom_taxonomies_with_terms() {
@@ -114,24 +139,60 @@ class Lititz_Craft_Beer_Fest_Jockey_Box{
 						'slug' => $year,
 					)
 				);
-			} else { return; }
+			} else { break; }
+		}
+
+		//Populate our sponsorship levels taxonomy with 1 to 5 stars
+		$tax = 'levels';
+		for( $l=1; $l <= 5; $l++ ) {
+			$slug = sprintf(
+				'%s star%s',
+				$this->number_word( $l ),
+				1 != $l ? 's' : ''
+			);
+			if ( ! is_array( term_exists( $slug, $tax ) ) ) {
+				$term_exists = wp_insert_term(
+					ucfirst( $slug ),
+					$tax,
+					array (
+						'description' => ucfirst( $slug ),
+						'slug'        => $slug,
+					)
+				);
+			} else { break; }
+		}
+	}
+
+	function number_word( $num ) {
+		switch( $num ){
+			case 1: return 'one';
+			case 2: return 'two';
+			case 3: return 'three';
+			case 4: return 'four';
+			case 5: return 'five';
 		}
 	}
 
 	function create_post_types() {
 		foreach( Lititz_Craft_Beer_Fest_Jockey_Box::$CUSTOM_POST_TYPES as $post_type => $attributes ) {
+
+			$taxonomies = array( 'category', 'years' );
+			if( 'sponsor' == $post_type ) {
+				$taxonomies = array( 'levels', 'years' );
+			}
+
 			register_post_type( $post_type,
 				array(
-					'labels' => array(
+					'labels'              => array(
 						'name'          => __( $attributes['plural'] ),
 						'singular_name' => __( $attributes['singular'] ),
 					),
-					'menu_icon' => $attributes['icon'],
-					'public' => true,
-					'has_archive' => true,
-					'taxonomies' => array( 'category', 'years' ),
+					'menu_icon'           => $attributes['icon'],
+					'public'              => true,
+					'has_archive'         => true,
+					'taxonomies'          => $taxonomies,
 					'exclude_from_search' => true,
-					'supports' => array( 'title', 'editor', 'thumbnail' )
+					'supports'            => array( 'title', 'editor', 'thumbnail' )
 				)
 			);
 		}

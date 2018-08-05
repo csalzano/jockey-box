@@ -3,7 +3,7 @@
 class Jockey_Box_Advanced_Custom_Fields{
 
 	function hooks() {
-		add_action( 'acf/register_fields', array( &$this, 'register_acf_field_groups' ) );
+		add_action( 'acf/register_fields', array( $this, 'register_acf_field_groups' ) );
 	}
 
 	function register_acf_field_groups() {
@@ -137,8 +137,7 @@ class Jockey_Box_Advanced_Custom_Fields{
 				'options' => array (
 					'position' => 'normal',
 					'layout' => 'no_box',
-					'hide_on_screen' => array (
-					),
+					'hide_on_screen' => array (),
 				),
 				'menu_order' => 0,
 			));

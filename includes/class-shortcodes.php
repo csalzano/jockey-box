@@ -3,9 +3,9 @@
 class Jockey_Box_Shortcodes{
 
 	function hooks() {
-		add_shortcode( 'jockey_box_grid', array( &$this, 'grid_shortcode' ) );
-		add_shortcode( 'jockey_box_sponsor_logo', array( &$this, 'sponsor_logo_shortcode' ) );
-		add_shortcode( 'jockey_box_sponsor_grid', array( &$this, 'sponsor_grid_shortcode' ) );
+		add_shortcode( 'jockey_box_grid', array( $this, 'grid_shortcode' ) );
+		add_shortcode( 'jockey_box_sponsor_logo', array( $this, 'sponsor_logo_shortcode' ) );
+		add_shortcode( 'jockey_box_sponsor_grid', array( $this, 'sponsor_grid_shortcode' ) );
 	}
 
 	function grid_shortcode( $atts ) {
@@ -191,5 +191,4 @@ class Jockey_Box_Shortcodes{
 		}
 		return '<a href="' . $url . '">' . $img_element . '</a>';
 	}
-
 }

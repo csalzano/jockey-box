@@ -3,7 +3,7 @@ Contributors: salzano
 Tags: beer, beer fest, craft beer, festival, brewery
 Requires at least: 3.0.1
 Tested up to: 4.8
-Stable tag: 2.1.0
+Stable tag: 3.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,6 +29,10 @@ This shortcode creates a grid of featured images attached to your attendees:
 
 
 == Changelog ==
+
+= 3.0.0 =
+* Removes categories taxonomy from Sponsors. Stop using categories to identify sponsor levels, and use a new Levels taxonomy with a 5 star rating system instead
+* Remove ampersands for older versions of PHP
 
 = 2.1.0 =
 * The Advanced Custom Fields configuration is now built into this plugin
